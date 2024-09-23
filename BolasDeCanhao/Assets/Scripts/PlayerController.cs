@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float forcaPulo;
     private Rigidbody2D rb;
-    private bool vivo = true;
     private bool pulou= false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,10 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         pulo();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene("Fase1");
+        }
     }
 
     void movimentaco()
@@ -34,17 +39,23 @@ public class PlayerController : MonoBehaviour
     }
     void pulo()
     {
-        if (Input.GetButtonDown("Jump"))
+        if (pulou == false)
         {
-            Debug.Log("Era pra pular");
-            rb.AddForce(new Vector2(0f,forcaPulo), ForceMode2D.Impulse);
-            pulou = true;
+            if (Input.GetButtonDown("Jump"))
+            {
+                
+                rb.AddForce(new Vector2(0f, forcaPulo), ForceMode2D.Impulse);
+                pulou = true;
+            }
         }
+        
 
 
     }
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        pulou= false;
+        
+        pulou = false;
     }
 }
